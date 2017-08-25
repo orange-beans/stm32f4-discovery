@@ -9,7 +9,7 @@
 DigitalOut LD3(PD_13);
 PwmOut LD4(PD_12);
 
-// TODO: PA_9 as UART is not working
+// TODO: PA_9 as UART is not working because it is in use for the USB port
 Serial dev(PB_6, PB_7, 115200);
 
 int main() {
