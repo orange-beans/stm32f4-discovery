@@ -1,5 +1,6 @@
 #include "mbed.h"
 #include <WS2812.h>
+#include <MAX31855.h>
 
 // Local Constant Defines
 // TODO: How to move to another file?
@@ -32,7 +33,12 @@ Serial dev(PB_6, PB_7, 115200);
 // NUCELO_F746ZG: 32, 105, 70, 123
 
 // WS2812 ws(PB_5, 1, 7, 7, 10, 15);
-WS2812 ws(PD_7, 1, 3, 7, 9, 9);
+//WS2812 ws(PD_7, 1, 3, 7, 9, 9);
+
+//SPI Interfaces
+SPI testSPI(PB_5, PB_4, PB_3);
+//Thermocouples
+max31855 max1(testSPI, PD_7);
 
 int main() {
 
@@ -47,7 +53,7 @@ int main() {
     LD3 = LOW;
     wait(0.5f);
 
-    ws.write(&colorbuf[counter]);
+    //ws.write(&colorbuf[counter]);
     counter ++;
     if (counter >= 5) counter = 0;
     dev.printf("STM32 Testing 2\n");
