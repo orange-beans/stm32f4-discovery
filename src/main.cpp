@@ -20,6 +20,9 @@ int colorbuf[NUM_COLORS] = {0xff0000ff,0xffff0000,0xff00ff00,0xffffff00,0xffff80
 
 // Pin Assignments
 DigitalOut LD3(PD_13);
+DigitalOut LD5(PD_14);
+DigitalOut LD6(PD_15);
+
 PwmOut LD4(PD_12);
 
 // TODO: PA_9 as UART is not working because it is in use for the USB port
@@ -49,8 +52,10 @@ int main() {
 
   while(1) {
     LD3 = HIGH;
+    LD5 = LOW;
     wait(0.5f);
     LD3 = LOW;
+    LD5 = HIGH;
     wait(0.5f);
 
     //ws.write(&colorbuf[counter]);
