@@ -44,11 +44,12 @@ SPI testSPI(PB_5, PB_4, PB_3);
 max31855 max1(testSPI, PD_7);
 
 int main() {
-
-  int counter = 0;
-
   LD4.period_ms(200);
   LD4.write(0.1f);
+
+  max1.initialise();
+  //Float value to hold temperature returned
+  float fvalue = 0;
 
   while(1) {
     LD3 = HIGH;
@@ -58,9 +59,24 @@ int main() {
     LD5 = HIGH;
     wait(0.5f);
 
-    //ws.write(&colorbuf[counter]);
-    counter ++;
-    if (counter >= 5) counter = 0;
-    dev.printf("STM32 Testing 2\n");
+    //Check if the chip is ready for a reading to be taken
+    if (max1.ready()==1){
+      //Get the reading
+      fvalue = max1.read_temp();
+
+      if (fvalue > 2000){
+        if(fvalue==2001){
+          dev.printf("No TC");
+        }else if(fvalue==2002){
+          dev.printf("Short to GND");
+        }else if(fvalue==2004){
+          dev.printf("Short to VCC");
+        }
+      }else{
+        dev.printf("Temperature is: %f\n\r", fvalue);
+      }
+
+      //dev.printf("STM32 Testing 2\n");
+    }
   }
 }
